@@ -23,6 +23,8 @@ package ru.petrovich.optimizing.latency;
  * SOFTWARE.
  */
 
+import lombok.SneakyThrows;
+
 import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;
 import java.io.File;
@@ -59,6 +61,7 @@ public class Main {
         System.out.println("Duration of a conversion in " + numberOfThreads + " threads is " + (endTimeMulti - startTimeMulti) + " ms");
     }
 
+    @SneakyThrows
     public static void recolorMultithreaded(BufferedImage originalImage, BufferedImage resultImage, int numberOfThreads) {
         List<Thread> threads = new ArrayList<>();
         int width = originalImage.getWidth();
@@ -82,10 +85,7 @@ public class Main {
         }
 
         for (Thread thread : threads) {
-            try {
-                thread.join();
-            } catch (InterruptedException e) {
-            }
+            thread.join();
         }
     }
 
