@@ -26,7 +26,16 @@
         <module>all_code_examples/thread-creation-part2-example</module>
         <module>all_code_examples/thread-termination-example</module>
         <module>all_code_examples/wait-notify-example</module>
+        <module>code-practice</module>
     </modules>
+
+    <dependencies>
+        <dependency>
+            <groupId>org.projectlombok</groupId>
+            <artifactId>lombok</artifactId>
+            <version>1.18.12</version>
+        </dependency>
+    </dependencies>
 
     <build>
         <plugins>
