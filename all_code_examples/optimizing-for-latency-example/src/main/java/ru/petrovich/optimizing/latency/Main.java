@@ -35,8 +35,8 @@ import java.util.List;
  * https://www.udemy.com/java-multithreading-concurrency-performance-optimization
  */
 public class Main {
-    public static final String SOURCE_FILE = "./resources/many-flowers.jpg";
-    public static final String DESTINATION_FILE = "./out/many-flowers.jpg";
+    public static final String SOURCE_FILE = "/projects/personal/personal/udemy-java-multithreading-concurrency/all_code_examples/optimizing-for-latency-example/src/main/resources/many-flowers.jpg";
+    public static final String DESTINATION_FILE = "/projects/personal/personal/udemy-java-multithreading-concurrency/all_code_examples/optimizing-for-latency-example/src/main/resources/out/many-flowers.jpg";
 
     public static void main(String[] args) throws IOException {
 
@@ -44,17 +44,19 @@ public class Main {
         BufferedImage resultImage = new BufferedImage(originalImage.getWidth(), originalImage.getHeight(), BufferedImage.TYPE_INT_RGB);
 
         long startTime = System.currentTimeMillis();
-        //recolorSingleThreaded(originalImage, resultImage);
-        int numberOfThreads = 1;
-        recolorMultithreaded(originalImage, resultImage, numberOfThreads);
+        recolorSingleThreaded(originalImage, resultImage);
         long endTime = System.currentTimeMillis();
 
-        long duration = endTime - startTime;
+        long startTimeMulti = System.currentTimeMillis();
+        int numberOfThreads = 12;
+        recolorMultithreaded(originalImage, resultImage, numberOfThreads);
+        long endTimeMulti = System.currentTimeMillis();
 
         File outputFile = new File(DESTINATION_FILE);
         ImageIO.write(resultImage, "jpg", outputFile);
 
-        System.out.println(String.valueOf(duration));
+        System.out.println("Duration of a conversion in single thread is " + (endTime - startTime) + " ms");
+        System.out.println("Duration of a conversion in " + numberOfThreads + " threads is " + (endTimeMulti - startTimeMulti) + " ms");
     }
 
     public static void recolorMultithreaded(BufferedImage originalImage, BufferedImage resultImage, int numberOfThreads) {
