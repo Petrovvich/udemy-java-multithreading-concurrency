@@ -6,9 +6,9 @@ package ru.petrovich.critical.sections.example;
  */
 public class Main {
     public static void main(String[] args) throws InterruptedException {
-        InventoryCounter inventoryCounter = new InventoryCounter();
-        IncrementingThread incrementingThread = new IncrementingThread(inventoryCounter);
-        DecrementingThread decrementingThread = new DecrementingThread(inventoryCounter);
+        final InventoryCounter inventoryCounter = new InventoryCounter();
+        final IncrementingThread incrementingThread = new IncrementingThread(inventoryCounter);
+        final DecrementingThread decrementingThread = new DecrementingThread(inventoryCounter);
 
         incrementingThread.start();
         decrementingThread.start();
@@ -16,12 +16,14 @@ public class Main {
         incrementingThread.join();
         decrementingThread.join();
 
-        System.out.println("We currently have " + inventoryCounter.getItems() + " items");
+        System.out.println(String.join(" ", "We currently have",
+                String.valueOf(inventoryCounter.getItems()),
+                "items"));
     }
 
     public static class DecrementingThread extends Thread {
 
-        private InventoryCounter inventoryCounter;
+        private final InventoryCounter inventoryCounter;
 
         public DecrementingThread(InventoryCounter inventoryCounter) {
             this.inventoryCounter = inventoryCounter;
@@ -37,7 +39,7 @@ public class Main {
 
     public static class IncrementingThread extends Thread {
 
-        private InventoryCounter inventoryCounter;
+        private final InventoryCounter inventoryCounter;
 
         public IncrementingThread(InventoryCounter inventoryCounter) {
             this.inventoryCounter = inventoryCounter;
